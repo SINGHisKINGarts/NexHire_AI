@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NexHire</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+      color: #eaeaf0;
+      padding: 30px;
+    }
+
+    h2 {
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      max-width: 700px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    textarea::placeholder {
+      color: #aaa;
+    }
+
+    input::file-selector-button {
+      background: #6c63ff;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button {
+      background: linear-gradient(135deg, #6c63ff, #8a2be2);
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #6c63ff;
+    }
+
+    #result {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 700px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    h3, h4 {
+      color: #ffffff;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 6px;
+      color: #d1d1ff;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🚀 NexHire Resume Analyzer</h2>
+
+<form id="uploadForm">
+  <input type="file" name="file" required />
+  <br><br>
+
+  <textarea name="job_desc" rows="8"
+    placeholder="Paste job description here..."></textarea>
+  <br><br>
+
+  <button type="submit">Analyze</button>
+</form>
+
+<h3>Result:</h3>
+<div id="result"></div>
+
+<script>
+document.getElementById("uploadForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "⏳ Analyzing...";
+
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch("/analyze", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error("Server error: " + response.status);
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
+            resultDiv.innerHTML = "❌ Backend Error: " + data.error;
+            return;
+        }
+
+        const r = data.result || {};
+
+        resultDiv.innerHTML = `
+            <h3>Match Score: ${r.match_score || "N/A"}</h3>
+
+            <h4>Missing Skills</h4>
+            <ul>${(r.missing_skills || []).map(s => `<li>${s}</li>`).join("")}</ul>
+
+            <h4>Weaknesses</h4>
+            <ul>${(r.weaknesses || []).map(s => `<li>${s}</li>`).join("")}</ul>
+
+            <h4>New Points</h4>
+            <ul>${(r.new_points || []).map(s => `<li>${s}</li>`).join("")}</ul>
+
+            <h4>Rewritten Points</h4>
+            <ul>${(r.rewritten_points || []).map(s => `<li>${s}</li>`).join("")}</ul>
+        `;
+
+    } catch (err) {
+        resultDiv.innerHTML = "❌ Error: " + err;
+    }
+});
+</script>
+
+</body>
+</html>
