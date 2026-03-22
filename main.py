@@ -50,11 +50,13 @@ async def analyze(file: UploadFile, job_desc: str = Form(...)):
         content = f"""
 You are a strict resume editor and recruiter.
 
-Return ONLY valid JSON. No explanation.
+Return ONLY valid JSON.
 
-IMPORTANT:
-- Do NOT invent fake metrics
-- Only improve existing content
+IMPORTANT RULES:
+- Do NOT invent any information
+- Do NOT add fake metrics
+- Only modify existing content
+- Focus on improving job relevance
 
 JOB DESCRIPTION:
 {job_desc}
@@ -63,19 +65,46 @@ RESUME:
 {text}
 
 TASK:
-1. match_score
-2. missing_skills
-3. weaknesses
-4. rewritten_points
-5. new_points
+
+1. Extract required skills from JD
+2. Extract skills from resume
+
+3. MATCH SCORE:
+score = (matched_skills / total_required_skills) * 100
+
+4. missing_skills:
+List exact missing technologies
+
+5. weaknesses:
+Only technical gaps (no soft skills)
+
+6. line_edits:
+- Only edit existing lines
+- Format:
+  "old": "...",
+  "new": "..."
+
+7. redundant_content:
+- Identify repeated/low-value text
+- Suggest removal
+
+8. rewritten_points:
+- Rewrite ONLY existing points
+- No fake metrics
+
+9. new_points:
+- Based on existing skills
+- No hallucination
 
 Return JSON:
 {{
   "match_score": number,
-  "missing_skills": ["..."],
-  "weaknesses": ["..."],
-  "rewritten_points": ["..."],
-  "new_points": ["..."]
+  "missing_skills": [],
+  "weaknesses": [],
+  "line_edits": [],
+  "redundant_content": [],
+  "rewritten_points": [],
+  "new_points": []
 }}
 """
 
