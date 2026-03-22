@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+python-multipart
+pdfplumber
+ollama
+python-jobspy
+pandas
+jobspy
