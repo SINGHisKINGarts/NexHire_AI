@@ -1,24 +1,19 @@
-from fastapi import FastAPI, UploadFile, Form
-from fastapi.responses import FileResponse
-import pdfplumber
-import ollama
-import asyncio
-import os
-import json
-import re
+"""
+main.py
+-------
+Pure helper module — resume text extraction and analysis logic.
+No FastAPI app here; all endpoints live in app.py.
+"""
 
-app = FastAPI()
-
-@app.get("/")
-async def home():
-    return FileResponse("index.html")
+import pdfplumber, ollama, asyncio, os, json, re, uuid
 
 
-def clean_text(text):
+# ── TEXT HELPERS ─────────────────────────────────────────────────────
+def clean_text(text: str) -> str:
     return " ".join(text.split())
 
 
-def extract_text(file_path):
+def extract_text(file_path: str) -> str:
     text = ""
     with pdfplumber.open(file_path) as pdf:
         for page in pdf.pages:
@@ -26,106 +21,85 @@ def extract_text(file_path):
     return text
 
 
-# 🔥 STRONG JSON PARSER (fixes your biggest bug)
-def safe_parse(text):
+def safe_parse(text: str) -> dict:
     try:
         text = text.replace("```json", "").replace("```", "")
         json_text = re.search(r"\{.*\}", text, re.DOTALL).group()
         return json.loads(json_text)
-    except:
+    except Exception:
         return {"raw": text}
 
 
-@app.post("/analyze")
-async def analyze(file: UploadFile, job_desc: str = Form(...)):
-    try:
-        # save file
-        with open("temp.pdf", "wb") as f:
-            f.write(await file.read())
+# ── RESUME ANALYSIS ──────────────────────────────────────────────────
+async def analyze_resume(pdf_path: str, job_desc: str) -> dict:
+    """
+    Extracts text from pdf_path, calls phi3:mini via Ollama,
+    and returns {"result": {...}, "model_used": "..."}.
+    """
+    print("📄 Extracting text...")
+    text = extract_text(pdf_path)
+    text = clean_text(text)[:3000]
 
-        print("📄 Extracting text...")
-        text = extract_text("temp.pdf")
-        text = clean_text(text)[:1000]
-
-        content = f"""
-You are a strict resume editor and recruiter.
-
-Return ONLY valid JSON.
-
-IMPORTANT RULES:
-- Do NOT invent any information
-- Do NOT add fake metrics
-- Only modify existing content
-- Focus on improving job relevance
+    content = f"""<|system|>
+You are a strict technical recruiter. Output ONLY a valid JSON object. No prose, no markdown, no explanation before or after the JSON.
+<|end|>
+<|user|>
+STRICT SCORING:
+- Score 0 by default. Add points only for skills explicitly in the resume.
+- Every missing required skill = -10 points minimum.
+- Partial match = half credit only.
+- No benefit of doubt. Not stated = missing.
+- 90-100: ALL required skills present
+- 70-89: most skills present, minor gaps
+- 40-69: several key skills missing
+- 0-39: many core skills missing
 
 JOB DESCRIPTION:
-{job_desc}
+{job_desc[:1000]}
 
 RESUME:
 {text}
 
-TASK:
-
-1. Extract required skills from JD
-2. Extract skills from resume
-
-3. MATCH SCORE:
-score = (matched_skills / total_required_skills) * 100
-
-4. missing_skills:
-List exact missing technologies
-
-5. weaknesses:
-Only technical gaps (no soft skills)
-
-6. line_edits:
-- Only edit existing lines
-- Format:
-  "old": "...",
-  "new": "..."
-
-7. redundant_content:
-- Identify repeated/low-value text
-- Suggest removal
-
-8. rewritten_points:
-- Rewrite ONLY existing points
-- No fake metrics
-
-9. new_points:
-- Based on existing skills
-- No hallucination
-
-Return JSON:
+Return ONLY this JSON:
 {{
-  "match_score": number,
-  "missing_skills": [],
-  "weaknesses": [],
-  "line_edits": [],
-  "redundant_content": [],
-  "rewritten_points": [],
-  "new_points": []
+  "match_score": <number 0-100>,
+  "missing_skills": [
+    {{"skill": "skill name", "action": "Build a project using X that does Y — add to Projects section"}}
+  ],
+  "weaknesses": ["specific technical gap 1", "specific technical gap 2"],
+  "line_edits": [
+    {{"original": "exact bullet from resume", "improved": "rewritten version targeting JD", "location": "Section > Subsection > bullet number"}}
+  ],
+  "new_points": [
+    {{"point": "new bullet to add", "location": "Section > Subsection > after which bullet"}}
+  ]
 }}
-"""
+<|end|>
+<|assistant|>"""
 
-        print("🤖 Calling model...")
+    print("🤖 Calling phi3:mini via Ollama...")
 
-        response = await asyncio.to_thread(
-            lambda: ollama.chat(
-                model="mistral",
-                messages=[{"role": "user", "content": content}]
-            )
+    model_to_use = "phi3:mini"
+    try:
+        ollama.show(model_to_use)
+    except Exception:
+        print("⚠️ phi3:mini not found, falling back to gemma:2b")
+        model_to_use = "gemma:2b"
+
+    response = await asyncio.to_thread(
+        lambda: ollama.chat(
+            model=model_to_use,
+            messages=[{"role": "user", "content": content}],
+            options={
+                "temperature":    0.1,
+                "num_predict":    1000,
+                "num_ctx":        2048,
+                "top_k":          10,
+                "top_p":          0.5,
+                "repeat_penalty": 1.1,
+            }
         )
+    )
 
-        result = response["message"]["content"]
-        parsed = safe_parse(result)
-
-        # cleanup
-        if os.path.exists("temp.pdf"):
-            os.remove("temp.pdf")
-
-        return {"result": parsed}
-
-    except Exception as e:
-        print("❌ ERROR:", str(e))
-        return {"error": str(e)}
+    parsed = safe_parse(response.message.content)
+    return {"result": parsed, "model_used": model_to_use}
