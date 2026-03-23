@@ -168,6 +168,27 @@
           "skills": []
         }
       ]
+    },
+    {
+      "search_id": "3261856d-8a63-4873-b173-5125826bb03f",
+      "query": "software engineer intern",
+      "location": "remote",
+      "scraped_at": "2026-03-23T17:15:59.801411",
+      "jobs": []
+    },
+    {
+      "search_id": "54ffe87d-f46c-4eef-b919-ce7e719de41e",
+      "query": "software engineer intern",
+      "location": "remote",
+      "scraped_at": "2026-03-23T17:16:01.996885",
+      "jobs": []
+    },
+    {
+      "search_id": "f7baf436-aa64-46e0-be47-8360b7b920c7",
+      "query": "software engineer intern",
+      "location": "remote",
+      "scraped_at": "2026-03-23T17:16:02.097029",
+      "jobs": []
     }
   ]
 }
