@@ -423,6 +423,27 @@
     }
     .btn-primary:hover { box-shadow: 0 0 10px rgba(108,99,255,0.5); transform: scale(1.03); }
 
+    .jobs-footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 14px;
+    }
+    .jobs-footer.hidden { display: none; }
+    .btn-load-more {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(108,99,255,0.35);
+      color: var(--soft);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 0.82rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s;
+    }
+    .btn-load-more:hover { background: rgba(108,99,255,0.1); border-color: var(--accent); }
+    .btn-load-more:disabled { opacity: 0.5; cursor: not-allowed; }
+
     /* ── Empty / error ── */
     .empty {
       text-align: center;
@@ -638,6 +659,45 @@
     .upload-text { font-size: 0.8rem; color: var(--muted); }
     .upload-text strong { color: var(--soft); }
     .upload-filename { font-size: 0.76rem; color: var(--accent); margin-top: 5px; }
+    .saved-resume-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 13px;
+      margin-bottom: 12px;
+    }
+    .saved-resume-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .saved-resume-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .saved-resume-select {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 9px 12px;
+      font-size: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .saved-resume-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 7px;
+      line-height: 1.45;
+    }
 
     .btn-run {
       width: 100%;
@@ -784,6 +844,223 @@
       font-weight: 600;
     }
     .applied-card { padding-left: 24px; }
+
+    /* ── Network / Recruiter pane ── */
+    .recruiter-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 14px;
+      margin-bottom: 9px;
+      animation: fadeUp 0.22s ease both;
+      transition: border-color 0.18s;
+    }
+    .recruiter-card:hover { border-color: rgba(108,99,255,0.3); }
+    .recruiter-card.priority-high  { border-left: 3px solid #4ade80; }
+    .recruiter-card.priority-medium{ border-left: 3px solid #fbbf24; }
+
+    .rec-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.84rem;
+      color: #fff;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .priority-badge {
+      font-size: 0.58rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      padding: 2px 6px;
+      border-radius: 20px;
+    }
+    .priority-badge.high   { background: rgba(74,222,128,0.15);  border: 1px solid rgba(74,222,128,0.3);  color: #4ade80; }
+    .priority-badge.medium { background: rgba(251,191,36,0.12);  border: 1px solid rgba(251,191,36,0.3);  color: #fbbf24; }
+
+    .rec-why {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-bottom: 9px;
+      line-height: 1.45;
+    }
+    .rec-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .btn-li {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(10,102,194,0.15);
+      border: 1px solid rgba(10,102,194,0.35);
+      color: #5aacff;
+      border-radius: 7px;
+      padding: 5px 11px;
+      font-size: 0.74rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.15s;
+    }
+    .btn-li:hover { background: rgba(10,102,194,0.25); }
+
+    .btn-email-copy {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(108,99,255,0.12);
+      border: 1px solid rgba(108,99,255,0.25);
+      color: var(--soft);
+      border-radius: 7px;
+      padding: 5px 11px;
+      font-size: 0.74rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-email-copy:hover { background: rgba(108,99,255,0.22); }
+    .btn-email-copy.copied { border-color: rgba(74,222,128,0.4); color: #4ade80; }
+
+    .btn-msg {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: linear-gradient(135deg, rgba(108,99,255,0.2), rgba(138,43,226,0.2));
+      border: 1px solid rgba(108,99,255,0.3);
+      color: #d1d1ff;
+      border-radius: 7px;
+      padding: 5px 11px;
+      font-size: 0.74rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-msg:hover { background: linear-gradient(135deg, rgba(108,99,255,0.35), rgba(138,43,226,0.35)); border-color: var(--accent); }
+
+    .email-formats-block {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 13px;
+      margin-bottom: 12px;
+    }
+    .email-formats-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .email-format-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 4px 0;
+      font-size: 0.75rem;
+    }
+    .email-format-label { color: #ccc; font-family: monospace; font-size: 0.72rem; }
+    .email-format-copy  { font-size: 0.68rem; color: var(--accent); cursor: pointer; font-family: 'Syne', sans-serif; font-weight: 600; }
+    .email-format-copy:hover { color: var(--soft); }
+
+    .pro-tips-block {
+      background: rgba(251,191,36,0.05);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 10px;
+      padding: 10px 13px;
+      margin-top: 10px;
+    }
+    .pro-tips-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: #fbbf24;
+      margin-bottom: 6px;
+    }
+    .pro-tip-item {
+      font-size: 0.74rem;
+      color: #e2c87a;
+      padding: 3px 0;
+      line-height: 1.5;
+    }
+    .pro-tip-item::before { content: '→ '; opacity: 0.6; }
+
+    /* ── Tone buttons ── */
+    .tone-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 20px;
+      padding: 5px 13px;
+      font-size: 0.74rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .tone-btn:hover { border-color: rgba(108,99,255,0.4); color: var(--soft); }
+    .tone-btn.active { background: rgba(108,99,255,0.2); border-color: var(--accent); color: #fff; }
+
+    /* ── Message result ── */
+    .msg-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 13px;
+      margin-bottom: 9px;
+    }
+    .msg-section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .msg-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--muted);
+    }
+    .btn-copy-msg {
+      font-size: 0.68rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      color: var(--accent);
+      background: none;
+      border: 1px solid rgba(108,99,255,0.25);
+      border-radius: 6px;
+      padding: 2px 9px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .btn-copy-msg:hover { background: rgba(108,99,255,0.1); }
+    .btn-copy-msg.done  { color: #4ade80; border-color: rgba(74,222,128,0.35); }
+
+    .msg-text {
+      font-size: 0.78rem;
+      color: #d1d1ff;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .msg-char-count {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 4px;
+      text-align: right;
+    }
+    .msg-subject {
+      font-size: 0.76rem;
+      color: #fbbf24;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+    .personalisation-tips {
+      background: rgba(74,222,128,0.05);
+      border: 1px solid rgba(74,222,128,0.15);
+      border-radius: 8px;
+      padding: 9px 12px;
+      margin-top: 8px;
+    }
+    .personalisation-tip { font-size: 0.73rem; color: #4ade80; padding: 2px 0; line-height: 1.5; }
+    .personalisation-tip::before { content: '💡 '; }
   </style>
 </head>
 <body>
@@ -814,6 +1091,7 @@
     <div class="drawer-tabs">
       <button class="drawer-tab active" id="tabApply"   onclick="switchTab('apply')">↗ Apply</button>
       <button class="drawer-tab"        id="tabAnalyze" onclick="switchTab('analyze')">🔍 Analyze</button>
+      <button class="drawer-tab"        id="tabNetwork" onclick="switchTab('network')">👥 Network</button>
     </div>
     <div class="drawer-pane" id="paneApply">
       <div class="drawer-loading" id="drawerLoading">
@@ -830,15 +1108,51 @@
     <div class="drawer-pane hidden" id="paneAnalyze">
       <div class="analyze-pane">
         <div class="analyze-job-label" id="analyzeJobLabel"></div>
+        <div class="saved-resume-box">
+          <div class="saved-resume-title">Saved Resumes</div>
+          <div class="saved-resume-row">
+            <select id="savedResumeSelect" class="saved-resume-select" onchange="onSavedResumeChange(this)">
+              <option value="">Select a saved resume</option>
+            </select>
+            <button class="btn-outline" type="button" onclick="refreshSavedResumes()">Refresh</button>
+          </div>
+          <div class="saved-resume-hint">Choose a saved PDF or upload a new one below. Uploaded resumes are saved automatically for later use.</div>
+        </div>
         <div class="upload-zone" id="uploadZone">
           <input type="file" id="resumeFile" accept=".pdf" onchange="onFileChange(this)" />
           <div class="upload-icon">📄</div>
-          <div class="upload-text"><strong>Click to upload</strong> or drag & drop</div>
-          <div class="upload-text" style="font-size:0.68rem;margin-top:3px">PDF only</div>
+          <div class="upload-text"><strong>Browse a new resume</strong> or drag & drop</div>
+          <div class="upload-text" style="font-size:0.68rem;margin-top:3px">PDF only · saves to your resume library</div>
           <div class="upload-filename" id="fileName"></div>
         </div>
         <button class="btn-run" id="runBtn" onclick="runAnalysis()" disabled>Analyze Resume →</button>
         <div id="analysisResult"></div>
+      </div>
+    </div>
+
+    <!-- Network / Recruiter pane -->
+    <div class="drawer-pane hidden" id="paneNetwork">
+      <div class="analyze-pane" id="networkPane">
+        <div class="analyze-job-label" id="networkJobLabel"></div>
+
+        <!-- Find button -->
+        <button class="btn-run" id="findBtn" onclick="findRecruiters()">👥 Find Recruiters & HRs</button>
+        <div id="recruiterResult"></div>
+
+        <!-- Message modal (hidden until recruiter selected) -->
+        <div id="msgPanel" style="display:none;margin-top:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;color:#fff" id="msgPanelTitle">Generate Message</div>
+            <button onclick="closeMsgPanel()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem">✕</button>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+            <button class="tone-btn active" data-tone="professional" onclick="setTone(this,'professional')">💼 Professional</button>
+            <button class="tone-btn" data-tone="friendly"     onclick="setTone(this,'friendly')">😊 Friendly</button>
+            <button class="tone-btn" data-tone="bold"         onclick="setTone(this,'bold')">⚡ Bold</button>
+          </div>
+          <button class="btn-run" id="genMsgBtn" onclick="generateMessage()" style="margin-bottom:12px">✨ Generate Message</button>
+          <div id="msgResult"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -889,6 +1203,9 @@
       </div>
       <div class="status" id="status"></div>
       <div id="jobs"><div class="empty">Enter a search query and hit Search 🔍</div></div>
+      <div class="jobs-footer hidden" id="jobsFooter">
+        <button class="btn-load-more" id="loadMoreBtn" onclick="loadMoreJobs()">Load More Jobs</button>
+      </div>
     </div>
   </div>
 
@@ -936,10 +1253,20 @@ let _activeJobDesc  = '';
 let _activeJobTitle = '';
 let _drawerMin      = false;
 let _analysisRunning = false;   // true while fetch is in-flight
+let _activeRecruiter = null;    // currently selected recruiter for messaging
+let _activeAnalysis  = {};      // last analysis result for message gen
+let _activeResumeText = '';     // last extracted resume text
+let _activeTone = 'professional';
+let _searchPage = 1;
+let _pageSize = 30;
+let _hasMoreJobs = false;
+let _lastSearch = { query:'', location:'', jobType:'' };
+let _savedResumes = [];
+let _selectedSavedResumeId = '';
 
 // ── Boot ──────────────────────────────────────────────────────────────
 (async () => {
-  await Promise.all([loadResume(), loadViewed(), loadApplied()]);
+  await Promise.all([loadResume(), loadViewed(), loadApplied(), loadSavedResumes()]);
 })();
 
 async function loadResume() {
@@ -971,6 +1298,32 @@ async function loadApplied() {
   } catch(_) {}
 }
 
+async function loadSavedResumes(preferredId='') {
+  try {
+    const res = await fetch('/resumes');
+    if (!res.ok) return;
+    const data = await res.json();
+    _savedResumes = data.resumes || [];
+    const select = document.getElementById('savedResumeSelect');
+    const current = preferredId || _selectedSavedResumeId;
+    select.innerHTML = `<option value="">Select a saved resume</option>` + _savedResumes.map(r =>
+      `<option value="${esc(r.id)}">${esc(r.name || r.filename)}</option>`
+    ).join('');
+    if (current && _savedResumes.some(r => r.id === current)) {
+      select.value = current;
+      _selectedSavedResumeId = current;
+    } else {
+      select.value = '';
+      _selectedSavedResumeId = '';
+    }
+    syncResumeChoiceState();
+  } catch(_) {}
+}
+
+function refreshSavedResumes() {
+  loadSavedResumes(_selectedSavedResumeId);
+}
+
 // ── Navigation ────────────────────────────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -990,29 +1343,85 @@ async function searchJobs() {
 
   const btn = document.getElementById('searchBtn');
   btn.disabled = true; btn.textContent = 'Searching…';
+  _searchPage = 1;
+  _lastSearch = { query, location, jobType };
   setStatus('loading', 'Scraping LinkedIn, Indeed, Glassdoor, ZipRecruiter…');
   document.getElementById('jobs').innerHTML = '';
+  updateLoadMore(false);
 
   try {
     const res  = await fetch('/search', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ search_query:query, location, job_type:jobType })
+      body: JSON.stringify({ search_query:query, location, job_type:jobType, page:_searchPage, page_size:_pageSize })
     });
     if (!res.ok) throw new Error('Server error ' + res.status);
     const data = await res.json();
     if (data.error) { setStatus('',''); showError(data.error); return; }
 
     _jobs = data.jobs || [];
+    _hasMoreJobs = !!data.has_more;
     const recCount = _jobs.filter(j => isRecommended(j)).length;
-    let msg = `${_jobs.length} job${_jobs.length !== 1 ? 's' : ''} found`;
+    let msg = `${data.total || _jobs.length} job${(data.total || _jobs.length) !== 1 ? 's' : ''} found`;
     if (recCount) msg += ` · ✨ ${recCount} match your resume`;
     setStatus('', msg);
     renderJobs(_jobs);
+    updateLoadMore(_hasMoreJobs);
   } catch(e) {
     setStatus('','');
     document.getElementById('jobs').innerHTML = `<div class="error-box">❌ ${e.message}</div>`;
+    updateLoadMore(false);
   } finally {
     btn.disabled = false; btn.textContent = 'Search';
+  }
+}
+
+async function loadMoreJobs() {
+  if (!_hasMoreJobs || !_lastSearch.query) return;
+
+  const btn = document.getElementById('loadMoreBtn');
+  btn.disabled = true;
+  btn.textContent = 'Loading…';
+
+  try {
+    const nextPage = _searchPage + 1;
+    const res = await fetch('/search', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        search_query:_lastSearch.query,
+        location:_lastSearch.location,
+        job_type:_lastSearch.jobType,
+        page:nextPage,
+        page_size:_pageSize,
+      })
+    });
+    if (!res.ok) throw new Error('Server error ' + res.status);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    const existing = new Set(_jobs.map(j => j.url || `${j.title}|${j.company}|${j.location}`));
+    const fresh = (data.jobs || []).filter(j => {
+      const key = j.url || `${j.title}|${j.company}|${j.location}`;
+      if (existing.has(key)) return false;
+      existing.add(key);
+      return true;
+    });
+
+    _searchPage = nextPage;
+    _hasMoreJobs = !!data.has_more;
+    _jobs = _jobs.concat(fresh);
+    renderJobs(_jobs);
+    updateLoadMore(_hasMoreJobs);
+
+    const recCount = _jobs.filter(j => isRecommended(j)).length;
+    let msg = `${data.total || _jobs.length} jobs found · showing ${_jobs.length}`;
+    if (recCount) msg += ` · ✨ ${recCount} match your resume`;
+    setStatus('', msg);
+  } catch(e) {
+    setStatus('', `Could not load more jobs: ${e.message}`);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Load More Jobs';
   }
 }
 
@@ -1088,6 +1497,11 @@ function renderJobs(jobs) {
       </div>
     </div>`;
   }).join('');
+}
+
+function updateLoadMore(show) {
+  const wrap = document.getElementById('jobsFooter');
+  wrap.classList.toggle('hidden', !show);
 }
 
 // ── Toggle card ───────────────────────────────────────────────────────
@@ -1265,14 +1679,28 @@ function openDrawer(idx, tab) {
   document.getElementById('drawerCompany').textContent = job.company || '';
   document.getElementById('analyzeJobLabel').textContent =
     `Analyzing: ${_activeJobTitle}` + (job.company ? ` @ ${job.company}` : '');
+  document.getElementById('networkJobLabel').textContent =
+    `Finding contacts at: ${job.company || _activeJobTitle}`;
+
+  // Reset network pane on job change
+  if (!isSameJob) {
+    document.getElementById('recruiterResult').innerHTML = '';
+    document.getElementById('msgPanel').style.display = 'none';
+    document.getElementById('msgResult').innerHTML = '';
+    _activeRecruiter = null;
+  }
 
   // Only reset the analyze pane if it is a different job, or no analysis is running
   if (!isSameJob || !_analysisRunning) {
     document.getElementById('fileName').textContent     = '';
     document.getElementById('resumeFile').value         = '';
+    document.getElementById('savedResumeSelect').value  = '';
+    _selectedSavedResumeId                              = '';
     document.getElementById('runBtn').disabled          = true;
     document.getElementById('analysisResult').innerHTML = '';
   }
+
+  loadSavedResumes(_selectedSavedResumeId);
 
   // Only reload the iframe if it is a different job
   if (!isSameJob) {
@@ -1311,8 +1739,10 @@ function openDrawer(idx, tab) {
 function switchTab(tab) {
   document.getElementById('tabApply').classList.toggle('active',   tab==='apply');
   document.getElementById('tabAnalyze').classList.toggle('active', tab==='analyze');
+  document.getElementById('tabNetwork').classList.toggle('active', tab==='network');
   document.getElementById('paneApply').classList.toggle('hidden',   tab!=='apply');
   document.getElementById('paneAnalyze').classList.toggle('hidden', tab!=='analyze');
+  document.getElementById('paneNetwork').classList.toggle('hidden', tab!=='network');
 }
 
 function showBlocked() {
@@ -1364,7 +1794,28 @@ document.getElementById('drawerOverlay').addEventListener('click', function(e) {
 function onFileChange(input) {
   const file = input.files[0];
   document.getElementById('fileName').textContent = file ? '✔ '+file.name : '';
-  document.getElementById('runBtn').disabled = !file;
+  if (file) {
+    _selectedSavedResumeId = '';
+    document.getElementById('savedResumeSelect').value = '';
+  }
+  syncResumeChoiceState();
+}
+
+function onSavedResumeChange(select) {
+  _selectedSavedResumeId = select.value || '';
+  if (_selectedSavedResumeId) {
+    document.getElementById('resumeFile').value = '';
+    document.getElementById('fileName').textContent = `Using saved resume: ${select.options[select.selectedIndex].text}`;
+  } else if (!document.getElementById('resumeFile').files[0]) {
+    document.getElementById('fileName').textContent = '';
+  }
+  syncResumeChoiceState();
+}
+
+function syncResumeChoiceState() {
+  const hasUpload = !!document.getElementById('resumeFile').files[0];
+  const hasSaved = !!_selectedSavedResumeId;
+  document.getElementById('runBtn').disabled = !(hasUpload || hasSaved);
 }
 const zone = document.getElementById('uploadZone');
 zone.addEventListener('dragover',  ()=>zone.classList.add('dragover'));
@@ -1376,7 +1827,7 @@ async function runAnalysis() {
   const fileInput = document.getElementById('resumeFile');
   const resultDiv = document.getElementById('analysisResult');
   const btn       = document.getElementById('runBtn');
-  if (!fileInput.files[0]) return;
+  if (!fileInput.files[0] && !_selectedSavedResumeId) return;
   if (!_activeJobDesc) {
     resultDiv.innerHTML = `<div class="error-box">⚠️ No job description for this listing.</div>`; return;
   }
@@ -1387,8 +1838,13 @@ async function runAnalysis() {
   showPill(`Analyzing: ${_activeJobTitle}`, 'Running AI analysis…', false);
 
   const fd = new FormData();
-  fd.append('file', fileInput.files[0]);
   fd.append('job_desc', _activeJobDesc);
+  if (fileInput.files[0]) {
+    fd.append('file', fileInput.files[0]);
+  }
+  if (_selectedSavedResumeId) {
+    fd.append('saved_resume_id', _selectedSavedResumeId);
+  }
 
   try {
     const res  = await fetch('/analyze',{method:'POST',body:fd});
@@ -1402,6 +1858,10 @@ async function runAnalysis() {
 
     renderResult(data, resultDiv);
 
+    // store for outreach message gen
+    _activeAnalysis   = data.result || {};
+    _activeResumeText = data.resume_text || '';
+
     // persist resume skills for recommendations
     if (data.resume_text) {
       const skills = extractSkills(data.resume_text);
@@ -1409,6 +1869,11 @@ async function runAnalysis() {
       fetch('/resume/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:data.resume_text,skills})});
       document.getElementById('resumeBanner').classList.add('show');
       if (_jobs.length) renderJobs(_jobs);
+    }
+
+    if (fileInput.files[0]) {
+      await loadSavedResumes();
+      document.getElementById('fileName').textContent = 'Saved and analyzed successfully';
     }
 
     const score = Math.round((data.result||{}).match_score||0);
@@ -1419,7 +1884,8 @@ async function runAnalysis() {
     showPill(`Failed: ${_activeJobTitle}`,'Error',true);
   } finally {
     _analysisRunning = false;
-    btn.disabled = false; btn.textContent = 'Analyze Resume →';
+    btn.textContent = 'Analyze Resume →';
+    syncResumeChoiceState();
   }
 }
 
@@ -1508,6 +1974,201 @@ function renderResult(data, el) {
       )}
       ${r.raw ? `<div class="error-box" style="margin-top:12px;font-size:0.74rem"><strong>Raw response (JSON parse failed):</strong><br><pre style="white-space:pre-wrap;margin-top:6px;word-break:break-word">${esc(r.raw)}</pre></div>` : ''}
     </div>`;
+}
+
+// ── Network / Recruiter ───────────────────────────────────────────────
+async function findRecruiters() {
+  const job = _jobs[_activeJobIdx];
+  if (!job) return;
+  const btn = document.getElementById('findBtn');
+  const el  = document.getElementById('recruiterResult');
+  btn.disabled = true; btn.textContent = '🔍 Searching…';
+  el.innerHTML = `<div class="loader-inline"><div class="spinner"></div> Finding recruiters at ${esc(job.company||job.title)}…</div>`;
+  try {
+    const res  = await fetch('/recruiter/find', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ company: job.company||'', title: job.title||'' })
+    });
+    const data = await res.json();
+    if (data.error) { el.innerHTML = `<div class="error-box">❌ ${esc(data.error)}</div>`; return; }
+    renderRecruiters(data, el);
+  } catch(e) {
+    el.innerHTML = `<div class="error-box">❌ ${e.message}</div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = '👥 Find Recruiters & HRs';
+  }
+}
+
+function renderRecruiters(data, el) {
+  let html = '';
+
+  if (data.company_people_url) {
+    html += `<div class="email-formats-block">
+      <div class="email-formats-title">👥 Start with the company people page</div>
+      <div class="rec-actions" style="margin-top:10px">
+        <a class="btn-li" href="${esc(data.company_people_url)}" target="_blank" rel="noopener">🔗 Open LinkedIn People</a>
+      </div>
+    </div>`;
+  }
+
+  // Email formats block
+  if (data.email_formats && data.email_formats.length) {
+    html += `<div class="email-formats-block">
+      <div class="email-formats-title">📧 Email Formats at ${esc(data.company_domain||'this company')}</div>`;
+    for (const f of data.email_formats) {
+      html += `<div class="email-format-row">
+        <span class="email-format-label">${esc(f.format||'')} &nbsp;<span style="color:#555;font-size:0.68rem">e.g. ${esc(f.example||'')}</span></span>
+        <span class="email-format-copy" onclick='copyText(${JSON.stringify(f.example || "")},this)'>Copy example</span>
+      </div>`;
+    }
+    html += `</div>`;
+  }
+
+  // Recruiter cards
+  for (const c of (data.suggested_contacts||[])) {
+    const pri = (c.outreach_priority||'MEDIUM').toLowerCase();
+    // Safely encode recruiter object for inline onclick
+    const safeJson = JSON.stringify(c).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    html += `<div class="recruiter-card priority-${pri}">
+      <div class="rec-role">
+        ${esc(c.role||'')}
+        <span class="priority-badge ${pri}">${esc(c.outreach_priority||'')}</span>
+      </div>
+      <div class="rec-why">${esc(c.why||'')}</div>
+      ${c.search_hint ? `<div class="rec-why" style="margin-top:6px;color:#9aa0b7">Search hint: ${esc(c.search_hint)}</div>` : ''}
+      <div class="rec-actions">
+        ${c.linkedin_search_url
+          ? `<a class="btn-li" href="${esc(c.linkedin_search_url)}" target="_blank" rel="noopener">🔗 ${esc(c.linkedin_search_label||'Search on LinkedIn')}</a>`
+          : ''}
+        ${c.google_search_url
+          ? `<a class="btn-outline" href="${esc(c.google_search_url)}" target="_blank" rel="noopener">🌐 Google profile search</a>`
+          : ''}
+        ${c.email_guess
+          ? `<button class="btn-email-copy" onclick='copyText(${JSON.stringify(c.email_guess || "")},this)'>📋 ${esc(c.email_guess)}${c.email_type==='guessed' ? ' · guessed' : ''}</button>`
+          : ''}
+        <button class="btn-msg" onclick="openMsgPanel(${safeJson})">✍️ Write Message</button>
+      </div>
+    </div>`;
+  }
+
+  // Pro tips
+  if (data.pro_tips && data.pro_tips.length) {
+    html += `<div class="pro-tips-block">
+      <div class="pro-tips-title">💡 Pro Tips</div>
+      ${data.pro_tips.map(t=>`<div class="pro-tip-item">${esc(t)}</div>`).join('')}
+    </div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function openMsgPanel(recruiter) {
+  _activeRecruiter = recruiter;
+  document.getElementById('msgPanelTitle').textContent = `Write Message — ${recruiter.role||'Recruiter'}`;
+  document.getElementById('msgPanel').style.display = 'block';
+  document.getElementById('msgResult').innerHTML = '';
+
+  const hasAnalysis = _activeResumeText || Object.keys(_activeAnalysis).length;
+  if (!hasAnalysis) {
+    document.getElementById('msgResult').innerHTML =
+      `<div style="font-size:0.76rem;color:#fbbf24;background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.2);border-radius:8px;padding:9px 12px;margin-top:4px">
+        💡 Tip: Run a resume analysis in the Analyze tab first — the message will be much more personalised.
+      </div>`;
+  }
+  document.getElementById('msgPanel').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function closeMsgPanel() {
+  document.getElementById('msgPanel').style.display = 'none';
+  _activeRecruiter = null;
+}
+
+function setTone(btn, tone) {
+  _activeTone = tone;
+  document.querySelectorAll('.tone-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function generateMessage() {
+  if (!_activeRecruiter) return;
+  const job = _jobs[_activeJobIdx];
+  if (!job) return;
+
+  const btn = document.getElementById('genMsgBtn');
+  const el  = document.getElementById('msgResult');
+  btn.disabled = true; btn.textContent = '✨ Generating…';
+  el.innerHTML = `<div class="loader-inline"><div class="spinner"></div> Writing personalised message…</div>`;
+
+  try {
+    const res = await fetch('/recruiter/message', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        recruiter:    _activeRecruiter,
+        job_title:    job.title   || '',
+        company:      job.company || '',
+        job_desc:     job.description || '',
+        resume_text:  _activeResumeText,
+        analysis:     _activeAnalysis,
+        tone:         _activeTone,
+      })
+    });
+    const data = await res.json();
+    if (data.error) { el.innerHTML = `<div class="error-box">❌ ${esc(data.error)}</div>`; return; }
+    renderMessage(data, el);
+  } catch(e) {
+    el.innerHTML = `<div class="error-box">❌ ${e.message}</div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = '✨ Generate Message';
+  }
+}
+
+function renderMessage(data, el) {
+  const dm    = data.linkedin_dm    || '';
+  const subj  = data.email_subject  || '';
+  const email = data.email_body     || '';
+  const tips  = data.personalisation_tips || [];
+
+  el.innerHTML = `
+    <div class="msg-section">
+      <div class="msg-section-header">
+        <span class="msg-section-title">💬 LinkedIn DM</span>
+        <button class="btn-copy-msg" onclick="copyMsgText(${JSON.stringify(dm)},this)">Copy</button>
+      </div>
+      <div class="msg-text">${esc(dm)}</div>
+      <div class="msg-char-count" style="color:${dm.length>300?'#f87171':'var(--muted)'}">${dm.length}/300 chars</div>
+    </div>
+    <div class="msg-section">
+      <div class="msg-section-header">
+        <span class="msg-section-title">📧 Cold Email</span>
+        <button class="btn-copy-msg" onclick="copyMsgText(${JSON.stringify('Subject: '+subj+'\n\n'+email)},this)">Copy All</button>
+      </div>
+      ${subj ? `<div class="msg-subject">Subject: ${esc(subj)}</div>` : ''}
+      <div class="msg-text">${esc(email)}</div>
+    </div>
+    ${tips.length ? `
+    <div class="personalisation-tips">
+      <div style="font-family:'Syne',sans-serif;font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:#4ade80;margin-bottom:6px">Before you send</div>
+      ${tips.map(t=>`<div class="personalisation-tip">${esc(t)}</div>`).join('')}
+    </div>` : ''}`;
+}
+
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.classList.add('copied');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => { btn.textContent = '⚠️ Failed'; });
+}
+
+function copyMsgText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.classList.add('done');
+    btn.textContent = '✅ Copied';
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('done'); }, 2500);
+  }).catch(() => { btn.textContent = '⚠️ Failed'; });
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────
