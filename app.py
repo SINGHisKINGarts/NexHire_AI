@@ -6,6 +6,7 @@ Run with: uvicorn app:app --reload --host 0.0.0.0 --port 8000
 from fastapi import FastAPI, UploadFile, Form, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import asyncio, os, uuid, json, re
 from pathlib import Path
 
@@ -78,6 +79,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # ── UI ───────────────────────────────────────────────────────────────
 @app.get("/")
